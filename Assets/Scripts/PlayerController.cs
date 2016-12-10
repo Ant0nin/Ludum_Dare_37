@@ -2,43 +2,82 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
+    PickableObject pickedObject;
+    Transform pickedObjectTransform;
 
-    public float displacementSpeed = 4f;
-    public float lookSensibility = 2f;
+    MonoBehaviour listener_dropping;
+    MonoBehaviour listener_move;
+    MonoBehaviour listener_view;
+    MonoBehaviour listener_interact;
 
-    Rigidbody rigid;
-    Transform view;
-    
     void Start()
     {
-        rigid = GetComponent<Rigidbody>();
-        view = transform.GetChild(0);
-    }
-	
-	void Update ()
-    {
-        UpdateDisplacement();
-        UpdateView();
-    }
+        pickedObject = null;
+        pickedObjectTransform = transform.GetChild(0).GetChild(0);
 
-    void UpdateDisplacement()
-    {
-        float joystickX = Input.GetAxis("Horizontal") * displacementSpeed;
-        float joystickY = Input.GetAxis("Vertical") * displacementSpeed;
-        rigid.velocity = transform.rotation * new Vector3(joystickX, 0, joystickY);
+        listener_move = GetComponent<PlayerGroundMoveListener>();
+        listener_view = GetComponent<PlayerInteractionListener>();
+        listener_interact = GetComponent<PlayerViewListener>();
+        listener_dropping = GetComponent<PlayerDroppingListener>();
+    }
+    
+    public void ReceiveOrder(PlayerOrder order) {
+        ReceiveOrder(order, null);
     }
 
-    // TODO : add joypad support
-    void UpdateView()
+    public void ReceiveOrder(PlayerOrder order, GameObject go)
     {
-        float mouseX = Input.GetAxis("Mouse X") * lookSensibility;
-        float mouseY = Input.GetAxis("Mouse Y") * lookSensibility;
+        switch(order)
+        {
+            case PlayerOrder.PICK_OBJECT:
+                OnPickObject(go);
+                break;
+            case PlayerOrder.DROP_OBJECT:
+                OnDropObject();
+                break;
+            case PlayerOrder.BEGIN_USE:
+                OnBeginUse();
+                break;
+            case PlayerOrder.END_USE:
+                OnEndUse();
+                break;
+        }
+    }
 
-        Vector3 localVerticalAxis = transform.worldToLocalMatrix.MultiplyVector(transform.up);
-        Vector3 localHorizontalAxis = transform.worldToLocalMatrix.MultiplyVector(-transform.right);
+    private void OnPickObject(GameObject go)
+    {
+        pickedObject = go.GetComponent<PickableObject>();
+        //go.GetComponent<Rigidbody>().detectCollisions = false;
+        pickedObject.GetComponent<Collider>().enabled = false;
+        go.transform.SetParent(pickedObjectTransform);
+        go.transform.position = pickedObjectTransform.position;
+        listener_dropping.enabled = true;
+    }
 
-        transform.Rotate(localVerticalAxis, mouseX);
-        view.Rotate(localHorizontalAxis, mouseY);
+    private void OnDropObject()
+    {
+        //pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
+        pickedObject.GetComponent<Collider>().enabled = true;
+        pickedObject.transform.parent = null;
+        pickedObject = null;
+        listener_dropping.enabled = false;
+    }
+
+    private void OnBeginUse() {
+        listener_move.enabled = false;
+        listener_view.enabled = false;
+        listener_interact.enabled = false;
+    }
+
+    private void OnEndUse() {
+        listener_move.enabled = true;
+        listener_view.enabled = true;
+        listener_interact.enabled = true;
+    }
+    
+    public ItemType getPickedObjectType() {
+        return (pickedObject == null ? ItemType.NONE : pickedObject.type);
     }
 }
