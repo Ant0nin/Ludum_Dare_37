@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -49,8 +47,10 @@ public class PlayerController : MonoBehaviour
     private void OnPickObject(GameObject go)
     {
         pickedObject = go.GetComponent<PickableObject>();
-        //go.GetComponent<Rigidbody>().detectCollisions = false;
         pickedObject.GetComponent<Collider>().enabled = false;
+        pickedObject.GetComponent<Rigidbody>().useGravity = false;
+        pickedObject.GetComponent<Rigidbody>().detectCollisions = false;
+
         go.transform.SetParent(pickedObjectTransform);
         go.transform.position = pickedObjectTransform.position;
         listener_dropping.enabled = true;
@@ -58,8 +58,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnDropObject()
     {
-        //pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
         pickedObject.GetComponent<Collider>().enabled = true;
+        pickedObject.GetComponent<Rigidbody>().useGravity = true;
+        pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
+
         pickedObject.transform.parent = null;
         pickedObject = null;
         listener_dropping.enabled = false;
