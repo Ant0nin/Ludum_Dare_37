@@ -55,6 +55,7 @@ public class DialogBroadcaster : MonoBehaviour
             offset += st.duration;
         }
         coroutine = this.WaitAndStopDialog(offset);
+        StartCoroutine(coroutine);
     }
 
     private IEnumerator WaitAndDiffuseSentence(DialogSentence st, float waitingTime)
