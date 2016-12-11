@@ -4,12 +4,14 @@ public class PlayerInteractionListener : MonoBehaviour
 {
     public float interactionMaxDistance = 4f;
 
+    UI_Manager ui;
     Transform view;
     PlayerController player;
 
     void Start() {
         view = transform.GetChild(0);
         player = GetComponent<PlayerController>();
+        ui = GameObject.Find("UI_Overlay").GetComponent<UI_Manager>();
     }
 
     void Update()
@@ -25,6 +27,8 @@ public class PlayerInteractionListener : MonoBehaviour
                 if (Input.GetButton("Fire1"))
                     obj.OnTrigger(player);
             }
+            else
+                ui.SetInteractionInfo("");
         }
     }
 }
