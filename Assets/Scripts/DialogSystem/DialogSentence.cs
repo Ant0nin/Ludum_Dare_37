@@ -4,5 +4,5 @@ public struct DialogSentence
 {
     public string text;
     public AudioClip audio;
-    public float offset;
+    public float duration;
 }

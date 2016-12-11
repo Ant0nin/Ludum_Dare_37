@@ -35,9 +35,9 @@ public class DialogBroadcaster : MonoBehaviour
         {
             DialogSentence st = new DialogSentence()
             {
-                offset = float.Parse(lines[i]),
-                text = lines[++i],
+                text = lines[i],
                 audio = Resources.Load<AudioClip>("Dialogs/Audio/" + lines[++i]),
+                duration = float.Parse(lines[++i]),
             };
             i++;
             sentences.Add(st);
@@ -46,23 +46,29 @@ public class DialogBroadcaster : MonoBehaviour
 
     public void Diffuse()
     {
-        foreach(DialogSentence st in sentences)
+        float offset = 0.0f;
+        IEnumerator coroutine;
+        foreach (DialogSentence st in sentences)
         {
-            IEnumerator coroutine = this.WaitAndDiffuseSentence(st);
+            coroutine = this.WaitAndDiffuseSentence(st, offset);
             StartCoroutine(coroutine);
+            offset += st.duration;
         }
-
-        // TODO : stop dialog
-
-        // TODO
-        /*if (autoDestroyAfterDiffusion)
-            GameObject.Destroy(this.gameObject);*/
+        coroutine = this.WaitAndStopDialog(offset);
     }
 
-    private IEnumerator WaitAndDiffuseSentence(DialogSentence st)
+    private IEnumerator WaitAndDiffuseSentence(DialogSentence st, float waitingTime)
     {
-        yield return new WaitForSeconds(st.offset);
+        yield return new WaitForSeconds(waitingTime);
         ui.SetDialog(st.text);
         this.audioSource.PlayOneShot(st.audio);
+    }
+
+    private IEnumerator WaitAndStopDialog(float waitingTime)
+    {
+        yield return new WaitForSeconds(waitingTime);
+        ui.SetDialog("");
+        if (autoDestroyAfterDiffusion)
+            GameObject.Destroy(this.gameObject);
     }
 }

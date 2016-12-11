@@ -48,8 +48,8 @@ public class PlayerController : MonoBehaviour
     {
         pickedObject = go.GetComponent<PickableObject>();
         pickedObject.GetComponent<Collider>().enabled = false;
-        pickedObject.GetComponent<Rigidbody>().useGravity = false;
-        pickedObject.GetComponent<Rigidbody>().detectCollisions = false;
+        pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
+        pickedObject.GetComponent<Rigidbody>().isKinematic = true;
 
         go.transform.SetParent(pickedObjectTransform);
         go.transform.position = pickedObjectTransform.position;
@@ -59,8 +59,8 @@ public class PlayerController : MonoBehaviour
     private void OnDropObject()
     {
         pickedObject.GetComponent<Collider>().enabled = true;
-        pickedObject.GetComponent<Rigidbody>().useGravity = true;
         pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
+        pickedObject.GetComponent<Rigidbody>().isKinematic = false;
 
         pickedObject.transform.parent = null;
         pickedObject = null;

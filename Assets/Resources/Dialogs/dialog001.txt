@@ -1,6 +1,9 @@
-0.0
 bonjour
 test01
 3.0
 aurevoir
 test02
+4.0
+bonjour
+test01
+6.0
