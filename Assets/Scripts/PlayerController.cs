@@ -1,9 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    PickableObject pickedObject;
-    Transform pickedObjectTransform;
+    List<PickableObject> inventory; // all switchable items
+    PickableObject rightHandedItem; // switchable item
+    PickableObject leftHandedItem; // only for flashlight
+
+    Transform rightHandTransform;
+    Transform leftHandTransform;
 
     MonoBehaviour listener_dropping;
     MonoBehaviour listener_move;
@@ -12,8 +17,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        pickedObject = null;
-        pickedObjectTransform = transform.GetChild(0).GetChild(0);
+        inventory = new List<PickableObject>();
+        rightHandTransform = transform.GetChild(0).GetChild(0);
+        leftHandTransform = transform.GetChild(0).GetChild(1);
 
         listener_move = GetComponent<PlayerGroundMoveListener>();
         listener_view = GetComponent<PlayerInteractionListener>();
@@ -46,24 +52,36 @@ public class PlayerController : MonoBehaviour
 
     private void OnPickObject(GameObject go)
     {
-        pickedObject = go.GetComponent<PickableObject>();
-        pickedObject.GetComponent<Collider>().enabled = false;
-        pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
-        pickedObject.GetComponent<Rigidbody>().isKinematic = true;
+        PickableObject item = go.GetComponent<PickableObject>();
+        item.GetComponent<Collider>().enabled = false;
+        item.GetComponent<Rigidbody>().detectCollisions = true;
+        item.GetComponent<Rigidbody>().isKinematic = true;
 
-        go.transform.SetParent(pickedObjectTransform);
-        go.transform.position = pickedObjectTransform.position;
+        Transform handTarget;
+        if (item.type == ItemType.FLASHLIGHT)
+            handTarget = leftHandTransform;
+        else
+        {
+            inventory.Add(item);
+            handTarget = rightHandTransform;
+        }
+
+        go.transform.SetParent(handTarget);
+        go.transform.position = handTarget.position;
         listener_dropping.enabled = true;
     }
 
     private void OnDropObject()
     {
-        pickedObject.GetComponent<Collider>().enabled = true;
-        pickedObject.GetComponent<Rigidbody>().detectCollisions = true;
-        pickedObject.GetComponent<Rigidbody>().isKinematic = false;
+        PickableObject item = rightHandedItem;
+        inventory.Remove(item);
 
-        pickedObject.transform.parent = null;
-        pickedObject = null;
+        item.GetComponent<Collider>().enabled = true;
+        item.GetComponent<Rigidbody>().detectCollisions = true;
+        item.GetComponent<Rigidbody>().isKinematic = false;
+
+        item.transform.parent = null;
+        item = null;
         listener_dropping.enabled = false;
     }
 
@@ -80,6 +98,6 @@ public class PlayerController : MonoBehaviour
     }
     
     public ItemType getPickedObjectType() {
-        return (pickedObject == null ? ItemType.NONE : pickedObject.type);
+        return (rightHandedItem == null ? ItemType.NONE : rightHandedItem.type);
     }
 }
