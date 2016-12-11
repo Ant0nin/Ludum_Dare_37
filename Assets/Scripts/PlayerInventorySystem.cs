@@ -29,7 +29,11 @@ public class PlayerInventorySystem
             handTarget = leftHandTransform;
             persistantItem = item;
         }
-        else {
+        else
+        {
+            /*if (currentItem)
+                currentItem.GetComponent<Renderer>().enabled = false;*/
+
             switchableItems.Add(item);
             handTarget = rightHandTransform;
             currentItem = item;
@@ -42,6 +46,9 @@ public class PlayerInventorySystem
     public void DropCurrentItem()
     {
         PickableObject item = currentItem;
+        if (!item)
+            return;
+
         if(item != persistantItem)
         {
             switchToNextItem();
@@ -58,22 +65,30 @@ public class PlayerInventorySystem
 
     public void switchToNextItem()
     {
+        //currentItem.GetComponent<Renderer>().enabled = false;
+
         int currentIndex = switchableItems.IndexOf(currentItem);
         currentIndex++;
         if (currentIndex > (switchableItems.Count - 1))
             currentItem = switchableItems[0];
         else
             currentItem = switchableItems[currentIndex];
+
+        //currentItem.GetComponent<Renderer>().enabled = true;
     }
 
     public void switchToPreviousItem()
     {
+        //currentItem.GetComponent<Renderer>().enabled = false;
+
         int currentIndex = switchableItems.IndexOf(currentItem);
         currentIndex--;
         if (currentIndex < 0)
             currentItem = switchableItems[switchableItems.Count - 1];
         else
             currentItem = switchableItems[currentIndex];
+
+        //currentItem.GetComponent<Renderer>().enabled = true;
     }
 
     public ItemType getCurrentItemType()

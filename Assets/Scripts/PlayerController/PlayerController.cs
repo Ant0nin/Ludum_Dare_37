@@ -57,13 +57,11 @@ public class PlayerController : MonoBehaviour
     private void OnPickObject(GameObject go)
     {
         inventory.PickItem(go);
-        listener_dropping.enabled = true;
     }
 
     private void OnDropObject()
     {
         inventory.DropCurrentItem();
-        listener_dropping.enabled = false;
     }
 
     private void OnNextItem()
