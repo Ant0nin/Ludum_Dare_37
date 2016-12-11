@@ -30,5 +30,7 @@ public class PlayerInteractionListener : MonoBehaviour
             else
                 ui.SetInteractionInfo("");
         }
+        else
+            ui.SetInteractionInfo("");
     }
 }
