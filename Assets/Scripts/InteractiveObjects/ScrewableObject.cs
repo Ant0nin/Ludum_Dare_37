@@ -18,13 +18,13 @@ public class ScrewableObject : InteractiveObject
 
     public override void OnFocus(PlayerController player)
     {
-        if (player.getPickedObjectType() == necessaryItem)
+        if (player.getCurrentItemType() == necessaryItem)
             this.ui.SetInteractionInfo(ControlDesc.USE_ITEM + " Unscrew " + objectName);
     }
 
     public override void OnTrigger(PlayerController player)
     {
-        if(player.getPickedObjectType() == necessaryItem)
+        if(player.getCurrentItemType() == necessaryItem)
             b_action = true;
     }
 

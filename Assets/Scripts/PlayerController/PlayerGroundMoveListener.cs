@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-// TODO : add joypad support
-
 public class PlayerGroundMoveListener : MonoBehaviour
 {
     public float displacementSpeed = 3f;

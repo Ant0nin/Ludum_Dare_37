@@ -1,7 +1,9 @@
 ﻿public enum PlayerOrder
 {
-    PICK_OBJECT,
-    DROP_OBJECT,
+    PICK_ITEM,
+    DROP_ITEM,
     BEGIN_USE,
-    END_USE
+    END_USE,
+    NEXT_ITEM,
+    PREVIOUS_ITEM
 }

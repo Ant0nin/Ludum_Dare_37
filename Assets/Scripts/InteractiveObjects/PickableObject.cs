@@ -11,6 +11,6 @@ public class PickableObject : InteractiveObject
 
     public override void OnTrigger(PlayerController player)
     {
-        player.ReceiveOrder(PlayerOrder.PICK_OBJECT, this.gameObject);
+        player.ReceiveOrder(PlayerOrder.PICK_ITEM, this.gameObject);
     }
 }

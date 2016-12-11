@@ -2,18 +2,18 @@
 
 public class PlayerDroppingListener : MonoBehaviour
 {
-    PlayerController player;
+    PlayerController mediator;
 
     void Start()
     {
-        player = GetComponent<PlayerController>();
+        mediator = GetComponent<PlayerController>();
     }
 
     void Update()
     {
         if(Input.GetButton("Fire2"))
         {
-            player.ReceiveOrder(PlayerOrder.DROP_OBJECT);
+            mediator.ReceiveOrder(PlayerOrder.DROP_ITEM);
         }
     }
 }

@@ -3,42 +3,40 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    List<PickableObject> inventory; // all switchable items
-    PickableObject rightHandedItem; // switchable item
-    PickableObject leftHandedItem; // only for flashlight
-
-    Transform rightHandTransform;
-    Transform leftHandTransform;
+    PlayerInventorySystem inventory;
 
     MonoBehaviour listener_dropping;
     MonoBehaviour listener_move;
     MonoBehaviour listener_view;
     MonoBehaviour listener_interact;
+    MonoBehaviour listener_inventoryScroll;
 
     void Start()
     {
-        inventory = new List<PickableObject>();
-        rightHandTransform = transform.GetChild(0).GetChild(0);
-        leftHandTransform = transform.GetChild(0).GetChild(1);
+        Transform rightHandTransform = transform.GetChild(0).GetChild(0);
+        Transform leftHandTransform = transform.GetChild(0).GetChild(1);
+        inventory = new PlayerInventorySystem(rightHandTransform, leftHandTransform);
 
         listener_move = GetComponent<PlayerGroundMoveListener>();
         listener_view = GetComponent<PlayerInteractionListener>();
         listener_interact = GetComponent<PlayerViewListener>();
         listener_dropping = GetComponent<PlayerDroppingListener>();
+        listener_inventoryScroll = GetComponent<PlayerInventoryScroolListener>();
     }
     
     public void ReceiveOrder(PlayerOrder order) {
         ReceiveOrder(order, null);
     }
 
+    // mediator :
     public void ReceiveOrder(PlayerOrder order, GameObject go)
     {
         switch(order)
         {
-            case PlayerOrder.PICK_OBJECT:
+            case PlayerOrder.PICK_ITEM:
                 OnPickObject(go);
                 break;
-            case PlayerOrder.DROP_OBJECT:
+            case PlayerOrder.DROP_ITEM:
                 OnDropObject();
                 break;
             case PlayerOrder.BEGIN_USE:
@@ -47,57 +45,53 @@ public class PlayerController : MonoBehaviour
             case PlayerOrder.END_USE:
                 OnEndUse();
                 break;
+            case PlayerOrder.NEXT_ITEM:
+                OnNextItem();
+                break;
+            case PlayerOrder.PREVIOUS_ITEM:
+                OnPreviousItem();
+                break;
         }
     }
 
     private void OnPickObject(GameObject go)
     {
-        PickableObject item = go.GetComponent<PickableObject>();
-        item.GetComponent<Collider>().enabled = false;
-        item.GetComponent<Rigidbody>().detectCollisions = true;
-        item.GetComponent<Rigidbody>().isKinematic = true;
-
-        Transform handTarget;
-        if (item.type == ItemType.FLASHLIGHT)
-            handTarget = leftHandTransform;
-        else
-        {
-            inventory.Add(item);
-            handTarget = rightHandTransform;
-        }
-
-        go.transform.SetParent(handTarget);
-        go.transform.position = handTarget.position;
+        inventory.PickItem(go);
         listener_dropping.enabled = true;
     }
 
     private void OnDropObject()
     {
-        PickableObject item = rightHandedItem;
-        inventory.Remove(item);
-
-        item.GetComponent<Collider>().enabled = true;
-        item.GetComponent<Rigidbody>().detectCollisions = true;
-        item.GetComponent<Rigidbody>().isKinematic = false;
-
-        item.transform.parent = null;
-        item = null;
+        inventory.DropCurrentItem();
         listener_dropping.enabled = false;
+    }
+
+    private void OnNextItem()
+    {
+        inventory.switchToNextItem();
+    }
+
+    private void OnPreviousItem()
+    {
+        inventory.switchToPreviousItem();
     }
 
     private void OnBeginUse() {
         listener_move.enabled = false;
         listener_view.enabled = false;
         listener_interact.enabled = false;
+        listener_inventoryScroll.enabled = false;
     }
 
     private void OnEndUse() {
         listener_move.enabled = true;
         listener_view.enabled = true;
         listener_interact.enabled = true;
+        listener_inventoryScroll.enabled = true;
     }
-    
-    public ItemType getPickedObjectType() {
-        return (rightHandedItem == null ? ItemType.NONE : rightHandedItem.type);
+
+    public ItemType getCurrentItemType()
+    {
+        return inventory.getCurrentItemType();
     }
 }
