@@ -32,8 +32,8 @@ public class ScrewableObject : InteractiveObject
     {
         if(b_action)
         {
-            transform.Translate(transform.up * translationSpeed * Time.deltaTime);
-            transform.Rotate(new Vector3(0, 0.2f * rotationSpeed * Time.deltaTime, 0));
+            transform.Translate(0, translationSpeed * Time.deltaTime, 0);
+            transform.Rotate(0, -rotationSpeed * Time.deltaTime, 0);
         }
         b_action = false;
 
@@ -41,7 +41,6 @@ public class ScrewableObject : InteractiveObject
         if(coveredDistance > distanceThreshold)
         {
             gameObject.AddComponent<Rigidbody>();
-            gameObject.AddComponent<Collider>();
             Destroy(this);
         }
     }
