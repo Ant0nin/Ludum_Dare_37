@@ -7,7 +7,7 @@ public abstract class InteractiveObject : MonoBehaviour
 
     protected UI_Manager ui;
 
-    void Start() {
+    protected void Start() {
         ui = GameObject.Find("UI_Overlay").GetComponent<UI_Manager>();
     }
 
