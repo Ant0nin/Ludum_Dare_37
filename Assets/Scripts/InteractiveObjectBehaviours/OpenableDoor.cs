@@ -6,6 +6,7 @@ public class OpenableDoor : InteractiveObject
     public float speed = 0.01f;
     public bool doorClosed = true;
     public bool useOnce = false;
+    public bool automaticDoor = false;
 
     private bool b_translateToTarget = false;
     private Vector3 startPosition;
@@ -22,12 +23,31 @@ public class OpenableDoor : InteractiveObject
 
     public override void OnFocus(PlayerController playerCtrl)
     {
-        this.ui.SetInteractionInfo(ControlDesc.INTERACT + (doorClosed ? " Open " : " Close ") + objectName);
+        if(!automaticDoor)
+            this.ui.SetInteractionInfo(ControlDesc.INTERACT + (doorClosed ? " Open " : " Close ") + objectName);
     }
 
     public override void OnTrigger(PlayerController playerCtrl)
     {
-        b_translateToTarget = true;
+        if(!automaticDoor)
+            b_translateToTarget = true;
+    }
+
+    public void Activate()
+    {
+        if (b_translateToTarget == true) // in progress
+            SwapState();
+        else
+            b_translateToTarget = true;
+    }
+
+    private void SwapState()
+    {
+        t = 1f - t;
+        doorClosed = !doorClosed;
+        Vector3 tmp = startPosition;
+        startPosition = endPosition;
+        endPosition = tmp;
     }
 
     void Update()
@@ -45,13 +65,10 @@ public class OpenableDoor : InteractiveObject
                 Destroy(this);
                 return;
             }
-
-            doorClosed = !doorClosed;
-            b_translateToTarget = false;
+            
+            SwapState();
             t = 0f;
-            Vector3 tmp = startPosition;
-            startPosition = endPosition;
-            endPosition = tmp;
+            b_translateToTarget = false;
         }
     }
 }
