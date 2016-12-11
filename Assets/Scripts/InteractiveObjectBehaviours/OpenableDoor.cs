@@ -4,7 +4,9 @@ using UnityEngine;
 public class OpenableDoor : InteractiveObject
 {
     public float speed = 0.01f;
-    
+    public bool doorClosed = true;
+    public bool useOnce = false;
+
     private bool b_translateToTarget = false;
     private Vector3 startPosition;
     private Vector3 endPosition;
@@ -20,7 +22,7 @@ public class OpenableDoor : InteractiveObject
 
     public override void OnFocus(PlayerController playerCtrl)
     {
-        this.ui.SetInteractionInfo(ControlDesc.INTERACT + " Open " + objectName);
+        this.ui.SetInteractionInfo(ControlDesc.INTERACT + (doorClosed ? " Open " : " Close ") + objectName);
     }
 
     public override void OnTrigger(PlayerController playerCtrl)
@@ -34,6 +36,22 @@ public class OpenableDoor : InteractiveObject
         {
             t += speed;
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
+        }
+
+        if(t >= 1f)
+        {
+            if(useOnce)
+            {
+                Destroy(this);
+                return;
+            }
+
+            doorClosed = !doorClosed;
+            b_translateToTarget = false;
+            t = 0f;
+            Vector3 tmp = startPosition;
+            startPosition = endPosition;
+            endPosition = tmp;
         }
     }
 }
