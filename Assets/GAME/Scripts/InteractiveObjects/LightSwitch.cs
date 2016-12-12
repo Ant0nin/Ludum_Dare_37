@@ -16,7 +16,8 @@ public class LightSwitch : InteractiveObject
         foreach(GameObject obj in lightObjects)
         {
             Light l = obj.GetComponent<Light>();
-            l.enabled = !l.enabled;
+            if(l != null)
+                l.enabled = !l.enabled;
         }
     }
 
