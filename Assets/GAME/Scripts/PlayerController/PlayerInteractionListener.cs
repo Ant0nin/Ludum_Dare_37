@@ -24,7 +24,7 @@ public class PlayerInteractionListener : MonoBehaviour
             if (obj != null)
             {
                 obj.OnFocus(player);
-                if (Input.GetButton("Fire1"))
+                if (Input.GetButtonDown("Fire1"))
                     obj.OnTrigger(player);
             }
             else
