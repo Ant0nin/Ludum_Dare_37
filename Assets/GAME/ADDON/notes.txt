@@ -1,0 +1,15 @@
+- hauteur camera joueur : 0.8, fov 65, near 0.01
+
+- régler les param hx volumetric lighting de la camera
+
+- tag "RoomLight" sur lumières qu'on peut allumer
+
+changer emplacement des textes
+
+- changement des materiaux, quand la porte s'ouvre ou timer écoulé
+
+agrandir la taille lcd
+
+- ecran corridor : standard spec, spec 0.831, emit = RT
+
+- animer starfield

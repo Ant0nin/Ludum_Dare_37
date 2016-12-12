@@ -8,11 +8,13 @@ public class S_TimerScreen : MonoBehaviour {
 	public float timer_current;
 	public GameObject text_3D;
 	public string temp;
+    Game_Manager game;
 
 	// Use this for initialization
 	void Start ()
 	{
 		timer_current = timer_length;
+        game = GameObject.Find("GameManager").GetComponent<Game_Manager>();
 	}
 	
 	// Update is called once per frame
@@ -25,5 +27,11 @@ public class S_TimerScreen : MonoBehaviour {
 
 		text_3D.GetComponent<TextMesh>().text = temp;
 
+        if(timer_current <= 0f)
+        {
+            timer_current = 0f;
+            game.Lose();
+            Destroy(this);
+        }
 	}
 }
