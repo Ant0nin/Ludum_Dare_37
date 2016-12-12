@@ -31,8 +31,8 @@ public class PlayerInventorySystem
         }
         else
         {
-            /*if (currentItem)
-                currentItem.GetComponent<Renderer>().enabled = false;*/
+            if (currentItem)
+                currentItem.GetComponent<Renderer>().enabled = false;
 
             switchableItems.Add(item);
             handTarget = rightHandTransform;
@@ -52,15 +52,20 @@ public class PlayerInventorySystem
         if (!hasSwitchableItems)
         {
             targetItem = persistantItem;
+            targetItem.GetComponent<Renderer>().enabled = true;
             DetachItemFromHand(targetItem);
             persistantItem = null;
         }
         else
         {
             if(switchableItems.Count > 1)
+            {
                 SwitchToNextItem();
+                currentItem.GetComponent<Renderer>().enabled = true;
+            }
 
             targetItem = GetPreviousItem();
+            targetItem.GetComponent<Renderer>().enabled = true;
             DetachItemFromHand(targetItem);
             switchableItems.Remove(GetPreviousItem());
 
@@ -79,11 +84,13 @@ public class PlayerInventorySystem
 
     public void SwitchToNextItem()
     {
-        //currentItem.GetComponent<Renderer>().enabled = false;
-
         currentItem = GetNextItem();
 
-        //currentItem.GetComponent<Renderer>().enabled = true;
+        if (switchableItems.Count > 1)
+        {
+            GetPreviousItem().GetComponent<Renderer>().enabled = false;
+            currentItem.GetComponent<Renderer>().enabled = true;
+        }
     }
 
     private PickableObject GetNextItem()
@@ -98,11 +105,13 @@ public class PlayerInventorySystem
 
     public void SwitchToPreviousItem()
     {
-        //currentItem.GetComponent<Renderer>().enabled = false;
-
         currentItem = GetPreviousItem();
 
-        //currentItem.GetComponent<Renderer>().enabled = true;
+        if (switchableItems.Count > 1)
+        {
+            GetNextItem().GetComponent<Renderer>().enabled = false;
+            currentItem.GetComponent<Renderer>().enabled = true;
+        }
     }
 
     private PickableObject GetPreviousItem()
