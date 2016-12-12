@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         listener_view = GetComponent<PlayerInteractionListener>();
         listener_interact = GetComponent<PlayerViewListener>();
         listener_dropping = GetComponent<PlayerDroppingListener>();
-        listener_inventoryScroll = GetComponent<PlayerInventoryScroolListener>();
+        listener_inventoryScroll = GetComponent<PlayerItemSwitchListener>();
     }
     
     public void ReceiveOrder(PlayerOrder order) {
@@ -56,22 +56,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnPickObject(GameObject go)
     {
+        listener_dropping.enabled = true;
+        listener_inventoryScroll.enabled = true;
         inventory.PickItem(go);
     }
 
     private void OnDropObject()
     {
         inventory.DropCurrentItem();
+        if (inventory.getItemsCount() == 0)
+        {
+            listener_dropping.enabled = false;
+            listener_inventoryScroll.enabled = false;
+        }
     }
 
     private void OnNextItem()
     {
-        inventory.switchToNextItem();
+        inventory.SwitchToNextItem();
     }
 
     private void OnPreviousItem()
     {
-        inventory.switchToPreviousItem();
+        inventory.SwitchToPreviousItem();
     }
 
     private void OnBeginUse() {

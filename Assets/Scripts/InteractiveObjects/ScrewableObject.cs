@@ -20,6 +20,8 @@ public class ScrewableObject : InteractiveObject
     {
         if (player.getCurrentItemType() == necessaryItem)
             this.ui.SetInteractionInfo(ControlDesc.USE_ITEM + " Unscrew " + objectName);
+        else
+            this.ui.SetInteractionInfo("");
     }
 
     public override void OnTrigger(PlayerController player)

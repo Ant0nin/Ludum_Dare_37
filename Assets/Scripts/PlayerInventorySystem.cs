@@ -45,55 +45,83 @@ public class PlayerInventorySystem
 
     public void DropCurrentItem()
     {
-        PickableObject item = currentItem;
-        if (!item)
-            return;
+        PickableObject targetItem;
+        bool hasSwitchableItems = (switchableItems.Count > 0);
 
-        if(item != persistantItem)
+        if (!hasSwitchableItems)
         {
-            switchToNextItem();
-            switchableItems.Remove(item);
+            targetItem = persistantItem;
+            DetachItemFromHand(targetItem);
+            persistantItem = null;
         }
+        else
+        {
+            if(switchableItems.Count > 1)
+                SwitchToNextItem();
 
-        item.GetComponent<Collider>().enabled = true;
-        item.GetComponent<Rigidbody>().detectCollisions = true;
-        item.GetComponent<Rigidbody>().isKinematic = false;
+            targetItem = GetPreviousItem();
+            DetachItemFromHand(targetItem);
+            switchableItems.Remove(GetPreviousItem());
 
-        item.transform.parent = null;
-        item = null;
+            if (switchableItems.Count == 0)
+                currentItem = null;
+        }
     }
 
-    public void switchToNextItem()
+    private void DetachItemFromHand(PickableObject target)
+    {
+        target.GetComponent<Collider>().enabled = true;
+        target.GetComponent<Rigidbody>().detectCollisions = true;
+        target.GetComponent<Rigidbody>().isKinematic = false;
+        target.transform.parent = null;
+    }
+
+    public void SwitchToNextItem()
     {
         //currentItem.GetComponent<Renderer>().enabled = false;
 
+        currentItem = GetNextItem();
+
+        //currentItem.GetComponent<Renderer>().enabled = true;
+    }
+
+    private PickableObject GetNextItem()
+    {
         int currentIndex = switchableItems.IndexOf(currentItem);
         currentIndex++;
         if (currentIndex > (switchableItems.Count - 1))
-            currentItem = switchableItems[0];
+            return switchableItems[0];
         else
-            currentItem = switchableItems[currentIndex];
+            return switchableItems[currentIndex];
+    }
+
+    public void SwitchToPreviousItem()
+    {
+        //currentItem.GetComponent<Renderer>().enabled = false;
+
+        currentItem = GetPreviousItem();
 
         //currentItem.GetComponent<Renderer>().enabled = true;
     }
 
-    public void switchToPreviousItem()
+    private PickableObject GetPreviousItem()
     {
-        //currentItem.GetComponent<Renderer>().enabled = false;
-
         int currentIndex = switchableItems.IndexOf(currentItem);
         currentIndex--;
         if (currentIndex < 0)
-            currentItem = switchableItems[switchableItems.Count - 1];
+            return switchableItems[switchableItems.Count - 1];
         else
-            currentItem = switchableItems[currentIndex];
-
-        //currentItem.GetComponent<Renderer>().enabled = true;
+            return switchableItems[currentIndex];
     }
 
     public ItemType getCurrentItemType()
     {
         return (currentItem == null ? ItemType.NONE : currentItem.type);
+    }
+
+    public int getItemsCount()
+    {
+        return switchableItems.Count + (persistantItem != null ? 1 : 0);
     }
 }
 

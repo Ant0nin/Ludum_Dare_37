@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerInventoryScroolListener : MonoBehaviour
+public class PlayerItemSwitchListener : MonoBehaviour
 {
     PlayerController mediator;
     //UI_Manager ui;

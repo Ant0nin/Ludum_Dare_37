@@ -11,7 +11,7 @@ public class PlayerDroppingListener : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButton("Fire2"))
+        if(Input.GetButtonDown("Fire2"))
         {
             mediator.ReceiveOrder(PlayerOrder.DROP_ITEM);
         }
