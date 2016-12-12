@@ -19,4 +19,8 @@ public class LightSwitch : InteractiveObject
             l.enabled = !l.enabled;
         }
     }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
+    }
 }

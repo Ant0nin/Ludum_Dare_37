@@ -20,4 +20,8 @@ public class TrapButton : InteractiveObject
     {
         game.Lose();
     }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
+    }
 }

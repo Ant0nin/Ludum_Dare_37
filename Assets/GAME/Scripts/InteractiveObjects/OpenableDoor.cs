@@ -71,4 +71,8 @@ public class OpenableDoor : InteractiveObject
             b_translateToTarget = false;
         }
     }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
+    }
 }

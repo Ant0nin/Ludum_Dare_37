@@ -26,4 +26,8 @@ public class TerminalObject : InteractiveObject
         if (player.getCurrentItemType() == necessaryItem)
             game.Win();
     }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
+    }
 }

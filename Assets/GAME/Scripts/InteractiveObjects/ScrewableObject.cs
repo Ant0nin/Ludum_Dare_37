@@ -24,9 +24,11 @@ public class ScrewableObject : InteractiveObject
             this.ui.SetInteractionInfo("");
     }
 
-    public override void OnTrigger(PlayerController player)
+    public override void OnTrigger(PlayerController player) {}
+
+    public override void OnTriggerHold(PlayerController player)
     {
-        if(player.getCurrentItemType() == necessaryItem)
+        if (player.getCurrentItemType() == necessaryItem)
             b_action = true;
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PickableObject : InteractiveObject
 {
@@ -12,5 +13,9 @@ public class PickableObject : InteractiveObject
     public override void OnTrigger(PlayerController player)
     {
         player.ReceiveOrder(PlayerOrder.PICK_ITEM, this.gameObject);
+    }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
     }
 }

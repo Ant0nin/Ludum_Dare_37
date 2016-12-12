@@ -13,4 +13,5 @@ public abstract class InteractiveObject : MonoBehaviour
 
     public abstract void OnFocus(PlayerController playerCtrl);
     public abstract void OnTrigger(PlayerController playerCtrl);
+    public abstract void OnTriggerHold(PlayerController playerCtrl);
 }
