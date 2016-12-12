@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 39420e2d07c570a4081eb6c2aae302dc
+timeCreated: 1481477059
+licenseType: Free
+ShaderImporter:
+  defaultTextures:
+  - _tex_crate_n: {fileID: 2800000, guid: 2432e7e98ff6b8f459e2d93a49660d1c, type: 3}
+  - _tex_crate_d: {fileID: 2800000, guid: 6c4b4caf88498934b9b75a70007b3fd5, type: 3}
+  - _tex_crate_s: {fileID: 2800000, guid: cd5dbd20fbd833c46917f772acf79761, type: 3}
+  - _tex_crate_g: {fileID: 2800000, guid: 0bf715424fd204449b85d7b50aba360d, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
