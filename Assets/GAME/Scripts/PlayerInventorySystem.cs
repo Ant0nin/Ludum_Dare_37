@@ -40,6 +40,7 @@ public class PlayerInventorySystem
         }
 
         go.transform.SetParent(handTarget);
+        go.transform.rotation = handTarget.rotation;
         go.transform.position = handTarget.position;
     }
 
