@@ -5,10 +5,10 @@ public class UI_Manager : MonoBehaviour
 {
     public float fadeSpeed = 0.1f;
 
-    Text tipArea;
     Text dialogArea;
     Text interactionArea;
     Text middleArea;
+    Text playerMindArea;
     RawImage mask;
 
     bool b_fadeIn = true;
@@ -17,16 +17,11 @@ public class UI_Manager : MonoBehaviour
     private void Start()
     {
         Text[] textAreas = transform.GetComponentsInChildren<Text>();
-        tipArea = textAreas[0];
-        interactionArea = textAreas[1];
-        dialogArea = textAreas[2];
-        middleArea = textAreas[3];
+        interactionArea = textAreas[0];
+        dialogArea = textAreas[1];
+        middleArea = textAreas[2];
+        playerMindArea = textAreas[3];
         mask = GetComponentInChildren<RawImage>();
-    }
-
-    public void SetTip(string text)
-    {
-        tipArea.text = text;
     }
 
     public void SetInteractionInfo(string text)
