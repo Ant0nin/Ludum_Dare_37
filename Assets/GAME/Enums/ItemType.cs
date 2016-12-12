@@ -3,5 +3,5 @@
     NONE,
     FLASHLIGHT,
     SCREWDRIVER,
-    CROWBAR
+    ACCESS_CARD
 }
