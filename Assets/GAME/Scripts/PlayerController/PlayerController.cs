@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
         listener_interact = GetComponent<PlayerViewListener>();
         listener_dropping = GetComponent<PlayerDroppingListener>();
         listener_inventoryScroll = GetComponent<PlayerItemSwitchListener>();
+
+        listener_dropping.enabled = false;
+        listener_inventoryScroll.enabled = false;
     }
     
     public void ReceiveOrder(PlayerOrder order) {
