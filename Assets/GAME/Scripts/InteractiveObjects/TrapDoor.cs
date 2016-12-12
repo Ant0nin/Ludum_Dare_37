@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class TrapDoor : MonoBehaviour
+public class TrapDoor : InteractiveObject
 {
     public string screwTargetTag = "TrapdoorScrew";
     public Vector3 forceWhenUnlock = new Vector3(0, 10, 0);
@@ -25,5 +26,18 @@ public class TrapDoor : MonoBehaviour
             rigid.AddForce(forceWhenUnlock);
             Destroy(this);
         }
+    }
+
+    public override void OnFocus(PlayerController playerCtrl)
+    {
+        ui.SetPlayerMind(SentenceKey.TRAPDOOR);
+    }
+
+    public override void OnTrigger(PlayerController playerCtrl)
+    {
+    }
+
+    public override void OnTriggerHold(PlayerController playerCtrl)
+    {
     }
 }

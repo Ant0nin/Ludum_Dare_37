@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class UI_Manager : MonoBehaviour
 {
     public float fadeSpeed = 0.1f;
+    public float sentenceSpeed = 0.01f;
 
     Text dialogArea;
     Text interactionArea;
@@ -13,8 +14,11 @@ public class UI_Manager : MonoBehaviour
 
     bool b_fadeIn = true;
     bool b_fadeOut = false;
+    bool b_init = false;
 
-    private void Start()
+    SentencesDictionary dictionary;
+
+    void Start()
     {
         Text[] textAreas = transform.GetComponentsInChildren<Text>();
         interactionArea = textAreas[0];
@@ -22,21 +26,35 @@ public class UI_Manager : MonoBehaviour
         middleArea = textAreas[2];
         playerMindArea = textAreas[3];
         mask = GetComponentInChildren<RawImage>();
+        dictionary = new SentencesDictionary();
+        b_init = true;
     }
 
     public void SetInteractionInfo(string text)
     {
-        interactionArea.text = text;
+        if(b_init)
+            interactionArea.text = text;
     }
 
     public void SetDialog(string text)
     {
-        dialogArea.text = text;
+        if(b_init)
+            dialogArea.text = text;
     }
 
     public void SetImportantText(string text)
     {
-        middleArea.text = text;
+        if (b_init)
+            middleArea.text = text;
+    }
+
+    public void SetPlayerMind(SentenceKey key)
+    {
+        if (b_init)
+        {
+            playerMindArea.text = dictionary.GetSentence(key);
+            playerMindArea.color = new Color(playerMindArea.color.r, playerMindArea.color.g, playerMindArea.color.b, 1.0f);
+        }
     }
 
     public void FadeIn()
@@ -53,7 +71,9 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
-        if(b_fadeIn)
+        playerMindArea.color = new Color(playerMindArea.color.r, playerMindArea.color.g, playerMindArea.color.b, playerMindArea.color.a - sentenceSpeed);
+
+        if (b_fadeIn)
             mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a - fadeSpeed);
         else if(b_fadeOut)
             mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a + fadeSpeed);

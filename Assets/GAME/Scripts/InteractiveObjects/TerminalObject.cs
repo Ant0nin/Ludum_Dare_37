@@ -15,6 +15,7 @@ public class TerminalObject : InteractiveObject
 
     public override void OnFocus(PlayerController player)
     {
+        ui.SetPlayerMind(SentenceKey.COMPUTER);
         if(player.getCurrentItemType() == necessaryItem)
             this.ui.SetInteractionInfo(ControlDesc.USE_ITEM + " Use " + objectName);
         else

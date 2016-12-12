@@ -18,6 +18,7 @@ public class ScrewableObject : InteractiveObject
 
     public override void OnFocus(PlayerController player)
     {
+        ui.SetPlayerMind(SentenceKey.SCREW);
         if (player.getCurrentItemType() == necessaryItem)
             this.ui.SetInteractionInfo(ControlDesc.USE_ITEM + " Unscrew " + objectName);
         else

@@ -13,7 +13,8 @@ public class TrapButton : InteractiveObject
 
     public override void OnFocus(PlayerController playerCtrl)
     {
-        this.ui.SetInteractionInfo(ControlDesc.INTERACT + " Push " + objectName);
+        ui.SetPlayerMind(SentenceKey.DOOR_BUTTON);
+        ui.SetInteractionInfo(ControlDesc.INTERACT + " Push " + objectName);
     }
 
     public override void OnTrigger(PlayerController playerCtrl)

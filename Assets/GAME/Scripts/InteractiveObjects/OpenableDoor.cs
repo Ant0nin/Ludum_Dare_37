@@ -23,6 +23,7 @@ public class OpenableDoor : InteractiveObject
 
     public override void OnFocus(PlayerController playerCtrl)
     {
+        ui.SetPlayerMind(SentenceKey.ARMORY);
         if(!automaticDoor)
             this.ui.SetInteractionInfo(ControlDesc.INTERACT + (doorClosed ? " Open " : " Close ") + objectName);
     }

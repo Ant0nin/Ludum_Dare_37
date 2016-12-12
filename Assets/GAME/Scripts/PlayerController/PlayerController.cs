@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     PlayerInventorySystem inventory;
+    UI_Manager ui;
 
     MonoBehaviour listener_dropping;
     MonoBehaviour listener_move;
