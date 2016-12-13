@@ -42,14 +42,14 @@ Shader "Video"
 }
 /*ASEBEGIN
 Version=21
-1167;744;1035;893;601.5;517.5;1;True;True
-Node;AmplifyShaderEditor.SamplerNode;1;-445.5,-160.5;Property;_TextureSample0;Texture Sample 0;-1;None;True;0;False;white;Auto;False;Object;-1;0,0;1.0
+766;428;1035;893;601.5;517.5;1;True;True
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;-25,-176;True;StandardSpecular;Video;False;False;False;False;False;False;False;False;False;False;False;False;Back;On;LEqual;Transparent;0.5;True;True;0;False;Transparent;Transparent;0,0,0;0,0,0;0,0,0;0,0,0;0.0;0.0;0.0;0.0;0.0;0.0;0.0;0,0,0
 Node;AmplifyShaderEditor.RangedFloatNode;2;-272.5,-279.5;Property;_Float0;Float 0;-1;0;0;0
 Node;AmplifyShaderEditor.RangedFloatNode;3;-272.5,-361.5;Property;_Smooth;Smooth;-1;0;0;0
+Node;AmplifyShaderEditor.SamplerNode;1;-392.5,-116.5;Property;_TextureSample0;Texture Sample 0;-1;None;True;0;False;white;Auto;False;Object;-1;0,0;1.0
 WireConnection;0;0;1;0
 WireConnection;0;3;2;0
 WireConnection;0;4;3;0
 WireConnection;0;6;1;1
 ASEEND*/
-//CHKSM=418BFD9A4EEF5124F70351FC3036D21EBFAA0498
+//CHKSM=6E0D85ED389CAF9277E9F7A2595F836DB2A193B2

@@ -30,7 +30,7 @@ public class Game_Manager : MonoBehaviour
     {
         // TODO : Eject bad guy
         ui.FadeOut();
-        ui.SetImportantText("You win !");
+        ui.SetImportantText("You ejected the Captain, you survived!");
 		diffuseur.PlayOneShot(audioWin);
         RestartLevel(timeBeforeReload); // TODO : quit game instead
     }
@@ -38,7 +38,7 @@ public class Game_Manager : MonoBehaviour
     public void Lose()
     {
         ui.FadeOut();
-        ui.SetImportantText("Game Over");
+        ui.SetImportantText("The Captain killed you...");
 		diffuseur.PlayOneShot(audioLose);
         IEnumerator coroutine = RestartLevel(timeBeforeReload);
         StartCoroutine(coroutine);
