@@ -71,12 +71,12 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
-        playerMindArea.color = new Color(playerMindArea.color.r, playerMindArea.color.g, playerMindArea.color.b, playerMindArea.color.a - sentenceSpeed);
+		playerMindArea.color = new Color(playerMindArea.color.r, playerMindArea.color.g, playerMindArea.color.b, playerMindArea.color.a - sentenceSpeed*Time.deltaTime);
 
         if (b_fadeIn)
-            mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a - fadeSpeed);
+			mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a - fadeSpeed*Time.deltaTime);
         else if(b_fadeOut)
-            mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a + fadeSpeed);
+			mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, mask.color.a + fadeSpeed*Time.deltaTime);
 
         if (mask.color.a >= 1.0f)
         {

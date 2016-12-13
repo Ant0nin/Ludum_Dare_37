@@ -1,21 +1,39 @@
  
-voice_openme
-5.0
+sfx_hammerdoor_more
+10.0
  
-voice_openmeplease
+voice_openme
+8.0
+ 
+sfx_hammerdoor
 5.0
+  
+voice_openmeplease
+10.0
+ 
+sfx_hammerdoor_more
+10.0
  
 voice_toussote_degeu
-5.0
- 
+4.0
+  
 voice_motherfucker
-5.0
- 
+6.0
+
+sfx_hammerdoor_more
+8.0
+
+sfx_hammerdoor_more
+12
+
 voice_motherfucker
 5.0
  
 voice_motherfucker
 5.7
- 
+
+sfx_hammerdoor_more
+8.0
+
 voice_ahahahaha
 4.2

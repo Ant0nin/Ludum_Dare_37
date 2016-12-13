@@ -9,6 +9,8 @@ public class S_TimerScreen : MonoBehaviour {
 	public GameObject text_3D;
 	public string temp;
     Game_Manager game;
+	public Material green1;
+	public Material green2;
 
 	// Use this for initialization
 	void Start ()
@@ -30,6 +32,7 @@ public class S_TimerScreen : MonoBehaviour {
         if(timer_current <= 0f)
         {
             timer_current = 0f;
+
             game.Lose();
             Destroy(this);
         }

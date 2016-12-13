@@ -7,17 +7,17 @@ public class Game_Manager : MonoBehaviour
     public float timeBeforeReload = 2f;
     UI_Manager ui;
 
-    AudioSource audioWin;
-    AudioSource audioLose;
+	public AudioClip audioWin;
+	public AudioClip audioLose;
+	private AudioSource diffuseur;
 
     private void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         ui = GameObject.Find("UI_Overlay").GetComponent<UI_Manager>();
-        AudioSource[] sounds = GetComponents<AudioSource>();
-        audioWin = sounds[0];
-        audioLose = sounds[1];
+
+		diffuseur = this.GetComponent<AudioSource>();
     }
 
     private IEnumerator RestartLevel(float timeOffset)
@@ -31,7 +31,7 @@ public class Game_Manager : MonoBehaviour
         // TODO : Eject bad guy
         ui.FadeOut();
         ui.SetImportantText("You win !");
-        audioWin.Play();
+		diffuseur.PlayOneShot(audioWin);
         RestartLevel(timeBeforeReload); // TODO : quit game instead
     }
 
@@ -39,7 +39,7 @@ public class Game_Manager : MonoBehaviour
     {
         ui.FadeOut();
         ui.SetImportantText("Game Over");
-        audioLose.Play();
+		diffuseur.PlayOneShot(audioLose);
         IEnumerator coroutine = RestartLevel(timeBeforeReload);
         StartCoroutine(coroutine);
     }
