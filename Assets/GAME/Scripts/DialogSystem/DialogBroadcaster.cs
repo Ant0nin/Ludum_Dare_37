@@ -33,11 +33,20 @@ public class DialogBroadcaster : MonoBehaviour
 
         while(i < lines.Length)
         {
+            string s_text = lines[i];
+            string s_audio_filename = "Dialogs/Audio/" + lines[++i];
+
+            if (s_audio_filename[s_audio_filename.Length - 1] == '\r')
+                s_audio_filename = s_audio_filename.Substring(0, s_audio_filename.Length - 1);
+
+            AudioClip s_audio = Resources.Load<AudioClip>(s_audio_filename);
+            float s_duration = float.Parse(lines[++i]);
+
             DialogSentence st = new DialogSentence()
             {
-                text = lines[i],
-                audio = Resources.Load<AudioClip>("Dialogs/Audio/" + lines[++i]),
-                duration = float.Parse(lines[++i]),
+                text = s_text,
+                audio = s_audio,
+                duration = s_duration,
             };
             i++;
             sentences.Add(st);
